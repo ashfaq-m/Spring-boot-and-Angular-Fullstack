@@ -1,6 +1,6 @@
 <div class="form-container">
   <h2>Simple Form</h2>
-  <form>
+  <form (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="name">Name:</label>
       <input
@@ -23,10 +23,36 @@
   </form>
 
 
-<div>
+<!--<div *ngIf="isSubmitted">
   <h3>Form Data :</h3>
-  <p><strong>Name : </strong></p>
-  <p><strong>Email :</strong></p>
-  <p><strong>Message : </strong></p>
-</div>
+  <table>
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Message</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of formData; let i = index ">
+      <th>{{i + 1}}</th>
+      <th>{{data.name}}</th>
+      <th>{{data.email}}</th>
+      <th>{{data.message}}</th>
+    </tr>
+    </tbody>
+  </table>
+</div>-->
+
+  <div class="flex-container" *ngIf="isSubmitted">
+    <app-message-details *ngFor="let data of formData; let i = index"
+                         [formData]="data"
+                         [index]="i"
+                         (delete)="deleteData($event)"
+    >
+
+    </app-message-details>
+  </div>
+
 </div>
