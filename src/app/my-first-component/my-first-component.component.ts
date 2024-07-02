@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
+import {MyFirstService} from "../my-first.service";
 
 @Component({
   selector: 'app-my-first-component',
@@ -12,13 +13,22 @@ export class MyFirstComponentComponent {
   message : string = '';
   isSubmitted : boolean = false;
   formData : Array<any> = [];
+  //variable inject
+  //private service : MyFirstService = inject(MyFirstService);
+
+  constructor(
+    private service : MyFirstService
+  ) {
+    this.isSubmitted = true;
+    this.formData = this.service.getAllMessages();
+  }
 
   onSubmit() {
     // console.log('Displaying Name : '+this.name);
     // console.log('Displaying Email : '+this.email);
     // console.log('Displaying Message : '+this.message)
     this.isSubmitted = true;
-    this.formData.push({
+    this.service.insert({
       'name' : this.name,
       'email' : this.email,
       'message' : this.message
@@ -28,6 +38,6 @@ export class MyFirstComponentComponent {
   }
 
   deleteData(index : number) {
-     this.formData.splice(index, 1);
+     this.service.deleteMessage(index);
   }
 }
